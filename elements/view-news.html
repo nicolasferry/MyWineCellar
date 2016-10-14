@@ -1,0 +1,21 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="news-element.html">
+
+<dom-module id="view-news">
+    <style>
+        :host {
+            display: block;
+            padding: 10px 20px;
+        }
+    </style>
+
+    <template>
+        <news-element name="ne"></news-element>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'view-news'
+        });
+    </script>
+</dom-module>

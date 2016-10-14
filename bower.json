@@ -1,0 +1,31 @@
+{
+  "name": "my-wine-cellar",
+  "homepage": "https://github.com/nicolasferry/MyWineCellar",
+  "authors": [
+    "nicolasferry <nicolas.ferry@sintef.no>"
+  ],
+  "description": "",
+  "main": "index.html",
+  "keywords": [
+    "wince",
+    "cellar",
+    "management"
+  ],
+  "license": "Apache v2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.7.0",
+    "app-layout": "PolymerElements/app-layout#^0.10.4",
+    "font-roboto": "PolymerElements/font-roboto#^1.0.1",
+    "app-route": "PolymerElements/app-route#^0.9.2",
+    "google-map": "GoogleWebComponents/google-map#^1.1.13",
+    "app-pouchdb": "PolymerElements/app-pouchdb#^0.9.2",
+    "google-chart": "GoogleWebComponents/google-chart#^1.1.1"
+  }
+}

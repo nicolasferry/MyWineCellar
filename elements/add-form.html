@@ -1,0 +1,81 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+
+<dom-module id="add-form">
+    <template>
+        <style>
+            paper-button.indigo {
+                background-color: var(--paper-indigo-500);
+                color: white;
+                --paper-button-raised-keyboard-focus: {
+                    background-color: var(--paper-pink-a200) !important;
+                    color: white !important;
+                }
+                ;
+            }
+        </style>
+        <app-pouchdb-document db-name="http://127.0.0.1:5984/cellar" doc-id="[[docId]]" data="{{bottle}}">
+        </app-pouchdb-document>
+        <app-pouchdb-index db-name="cellar" fields='["name"]'>
+        </app-pouchdb-index>
+
+        <form is="iron-form" id="submitBottle">
+            <paper-input on-focusout="setDocId" id="nameInput" bind-value="{{bottle.name}}" label="Name" required auto-validate error-message="Name required!"></paper-input>
+            <paper-input id="domainInput" bind-value="{{bottle.domain}}" label="Domain" auto-validate error-message="Domain required!"></paper-input>
+            <paper-input bind-value="{{bottle.region}}" label="Region" auto-validate></paper-input>
+            <paper-input id="yearInput" bind-value="{{bottle.year}}" label="Year" auto-validate pattern="[0-9]{0,4}" error-message="Number only!"></paper-input>
+            <paper-dropdown-menu bind-value="{{bottle.country}}" label="Country" name="country">
+                <paper-listbox class="dropdown-content" selected="0">
+                    <paper-item>France</paper-item>
+                    <paper-item>Italy</paper-item>
+                    <paper-item>Spain</paper-item>
+                    <paper-item>Hungary</paper-item>
+                    <paper-item>Chile</paper-item>
+                    <paper-item>USA</paper-item>
+                    <paper-item>Argentina</paper-item>
+                </paper-listbox>
+            </paper-dropdown-menu>
+            <paper-dropdown-menu bind-value="{{bottle.cru}}" label="Cru" name="cru">
+                <paper-listbox class="dropdown-content">
+                    <paper-item>Permier cru</paper-item>
+                    <paper-item>Grand cru</paper-item>
+                    <paper-item>Cru classé</paper-item>
+                </paper-listbox>
+            </paper-dropdown-menu>
+            <label id="color">Color:</label>
+            <paper-radio-group bind-value="{{bottle.color}}" aria-labelledby="color1">
+                <paper-radio-button name="red">Red</paper-radio-button>
+                <paper-radio-button name="white">White</paper-radio-button>
+                <paper-radio-button name="rose">Rosé</paper-radio-button>
+            </paper-radio-group>
+            <paper-input bind-value="{{bottle.quantity}}" label="Quantity" auto-validate pattern="[0-9]{0,4}" error-message="Number only!"></paper-input>
+            <paper-input bind-value="{{bottle.price}}" label="Price" auto-validate pattern="[0-9]{0,4}" error-message="Number only!">
+                <div prefix>€</div>
+            </paper-input>
+            <paper-button raised on-click="submitForm" class="custom indigo">Submit</paper-button>
+            <paper-button raised onclick="_reset(event)" class="custom indigo">Reset</paper-button>
+        </form>
+    </template>
+    <script>
+        Polymer({
+            is: 'add-form',
+            properties: {
+                docId: {
+                    type: String,
+                    notify: true
+                }
+            },
+
+            submitForm: function (event) {
+                this.docId = this.$.domainInput.value + this.$.yearInput.value;
+                modal.close();
+            }
+        });
+
+        function _reset(event) {
+            var form = Polymer.dom(event).localTarget.parentElement
+            form.reset();
+            form.querySelector('.output').innerHTML = '';
+        }
+    </script>
+</dom-module>

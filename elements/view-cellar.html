@@ -1,0 +1,44 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="view-cellar">
+    <template>
+        <style>
+            :host {
+                display: block;
+                padding: 10px 20px;
+            }
+            
+            div[role="listbox"] {
+                border: 1px solid #e5e5e5;
+            }
+            
+            .avatar {
+                display: inline-block;
+                box-sizing: border-box;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: var(--paper-amber-500);
+            }
+        </style>
+        <div role="listbox">
+            <paper-icon-item>
+                <div class="avatar" item-icon></div>
+                <paper-item-body two-line>
+                    <div>Photos</div>
+                    <div secondary>Jan 9, 2014</div>
+                </paper-item-body>
+                <paper-icon-button icon='delete' style='color: gray'>
+                </paper-icon-button>
+                <paper-icon-button icon='more-vert'>
+                </paper-icon-button>
+            </paper-icon-item>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'view-cellar'
+        });
+    </script>
+</dom-module>

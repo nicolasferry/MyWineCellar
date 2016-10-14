@@ -1,0 +1,40 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="view-stats">
+    <style>
+        :host {
+            display: block;
+            padding: 10px 20px;
+        }
+        
+        google-map {
+            height: 300px;
+            width: 300px;
+        }
+        
+        #selection-display {
+            display: inline-block;
+            position: relative;
+            top: 50%;
+        }
+    </style>
+
+    <template>
+        <google-map latitude="37.77493" longitude="-122.41942" fit-to-markers language="en" api-key="AIzaSyA4khYL7DEU8hz94gSNm9nZQl2USiE15z0">
+            <google-map-marker latitude="37.777" longitude="-122.38911"></google-map-marker>
+        </google-map>
+        <div>
+            <google-chart type='pie' options='{"title": "Distribution of days in 2001Q1"}' cols='[{"label":"Month", "type":"string"}, {"label":"Days", "type":"number"}]' rows='[["Jan", 31],["Feb", 28],["Mar", 31]]' selection='[{"row": 1}]'>>
+            </google-chart>
+            <div id="selection-display">
+                Selected row: <span id="selection-label">None</span>.
+            </div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'view-stats'
+        });
+    </script>
+</dom-module>

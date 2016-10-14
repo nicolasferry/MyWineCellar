@@ -1,0 +1,61 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="news-element">
+    <template>
+        <style is="custom-style">
+            paper-card.rate {
+                @apply(--layout-horizontal);
+            }
+            
+            .rate-image {
+                width: 100px;
+                height: 170px;
+                background: url('./donuts.png');
+                background-size: cover;
+            }
+            
+            .rate-content {
+                @apply(--layout-flex);
+                float: left;
+            }
+            
+            .rate-header {
+                @apply(--paper-font-headline);
+            }
+            
+            .rate-name {
+                color: var(--paper-grey-600);
+                margin: 10px 0;
+            }
+            
+            paper-icon-button.rate-icon {
+                --iron-icon-fill-color: white;
+                --iron-icon-stroke-color: var(--paper-grey-600);
+            }
+        </style>
+        <paper-card class="rate">
+            <div class="rate-content">
+                <div class="card-content">
+                    <div class="rate-header">Rully</div>
+                    <div class="rate-name">Premier cru</div>
+                    <div>1999</div>
+                </div>
+                <div class="card-actions">
+                    <paper-icon-button class="rate-icon" icon="star"></paper-icon-button>
+                    <paper-icon-button class="rate-icon" icon="star"></paper-icon-button>
+                    <paper-icon-button class="rate-icon" icon="star"></paper-icon-button>
+                    <paper-icon-button class="rate-icon" icon="star"></paper-icon-button>
+                    <paper-icon-button class="rate-icon" icon="star"></paper-icon-button>
+                </div>
+            </div>
+            <div class="rate-image"></div>
+        </paper-card>
+    </template>
+
+
+    <script>
+        Polymer({
+            is: 'news-element'
+        });
+    </script>
+</dom-module>

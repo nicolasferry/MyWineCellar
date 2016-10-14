@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="../bower_components/polymer/polymer.html" rel="import">
+    <!-- Element Imports -->
+    <link rel="import" href="../bower_components/paper-elements/paper-elements.html">
+    <link rel="import" href="../bower_components/paper-item/paper-item-body.html">
+    <link rel="import" href="../bower_components/paper-item/paper-icon-item.html    ">
+    <link rel="import" href="../bower_components/app-layout/app-layout.html">
+    <link rel="import" href="../bower_components/font-roboto/roboto.html">
+    <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+    <link rel="import" href="../bower_components/app-layout/app-scroll-effects/effects/parallax-background.html">
+    <link rel="import" href="../bower_components/app-layout/app-scroll-effects/effects/waterfall.html">
+    <link rel="import" href="../bower_components/app-route/app-location.html">
+    <link rel="import" href="../bower_components/app-route/app-route.html">
+    <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+    <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+    <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+    <link rel="import" href="../bower_components/iron-icons/communication-icons.html">
+    <link rel="import" href="../bower_components/google-map/google-map.html">
+    <link rel="import" href="../bower_components/iron-icons/social-icons.html">
+    <link rel="import" href="../bower_components/iron-icons/image-icons.html">
+    <link rel="import" href="../bower_components/google-map/google-map-marker.html">
+    <link rel="import" href="../bower_components/google-map/google-map-poly.html">
+    <link rel="import" href="../bower_components/google-map/google-map-directions.html">
+    <link rel="import" href="../bower_components/google-chart/google-chart.html">
+    <link rel="import" href="../bower_components/app-pouchdb/app-pouchdb-query.html">
+    <link rel="import" href="../bower_components/app-pouchdb/app-pouchdb-document.html">
+    <link rel="import" href="../bower_components/app-pouchdb/app-pouchdb-conflict-resolution.html">
+
+    <link rel="import" href="add-dialog.html">
+    <link rel="import" href="add-form.html">
+
+
+</head>
+
+
+<dom-module id="news-app">
+    <template>
+        <style>
+            app-header {
+                background-color: firebrick;
+                color: #fff;
+                --app-header-background-rear-layer: {
+                    /* The header is blue when condensed */
+                    background-color: skyblue;
+                }
+            }
+            
+            app-drawer {
+                --app-drawer-content-container: {
+                    background-color: whitesmoke;
+                }
+            }
+            
+            .drawer-contents {
+                height: 100%;
+                overflow-y: auto;
+            }
+            
+            paper-fab {
+                background-color: firebrick;
+                position: fixed;
+                bottom: 16px;
+                right: 16px;
+            }
+        </style>
+
+        <app-location route="{{route}}"></app-location>
+        <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+
+
+        <app-drawer-layout force-narrow>
+            <app-drawer id="drawer" swipe-open>
+                <paper-drawer-panel>
+                    <paper-header-panel drawer>
+                        <paper-toolbar>
+                            <div>Application</div>
+                        </paper-toolbar>
+                        <div> Drawer content... </div>
+                    </paper-header-panel>
+                    <paper-header-panel main>
+                        <paper-toolbar>
+                            <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                            <div>Title</div>
+                        </paper-toolbar>
+                        <div> Main content... </div>
+                    </paper-header-panel>
+                </paper-drawer-panel>
+            </app-drawer>
+            <app-header-layout>
+                <app-header condenses fixed effects="waterfall">
+                    <app-toolbar>
+                        <paper-icon-button icon="menu" onclick="document.getElementById('drawer').toggle();"></paper-icon-button>
+                        <div main-title>MyWineCellar</div>
+                        <paper-icon-button icon="search"></paper-icon-button>
+                    </app-toolbar>
+                    <paper-tabs selected="{{page}}" attr-for-selected="name" role="navigation">
+                        <paper-tab name="view-news">News</paper-tab>
+                        <paper-tab name="view-cellar">My Cellar</paper-tab>
+                        <paper-tab name="view-stats">Statistics</paper-tab>
+                    </paper-tabs>
+                </app-header>
+
+                <iron-pages selected="{{page}}" attr-for-selected="name" role="main">
+                    <view-news name="view-news"></view-news>
+                    <view-cellar name="view-cellar"></view-cellar>
+                    <view-stats name="view-stats"></view-stats>
+                </iron-pages>
+
+                <paper-fab icon="add" title="add" onclick="modal.open()"></paper-fab>
+                <add-dialog></add-dialog>
+
+            </app-header-layout>
+
+        </app-drawer-layout>
+    </template>
+    <script>
+        Polymer({
+            is: 'news-app',
+            properties: {
+                page: {
+                    type: String,
+                    reflectToAttribute: true,
+                    observer: '_pageChanged'
+                }
+            },
+            observers: [
+        '_routePageChanged(routeData.page)'
+      ],
+            _routePageChanged: function (page) {
+                this.page = page || 'view-news';
+            },
+            _pageChanged: function (page) {
+                // Load page import on demand. Show 404 page if fails
+                console.log(">>>>" + page);
+                var resolvedPageUrl = this.resolveUrl(page + '.html');
+                this.importHref(resolvedPageUrl, null, this._showPage404, true);
+            },
+            _showPage404: function () {
+                this.page = 'view-404';
+            }
+        });
+    </script>
+</dom-module>
+
+</html>
