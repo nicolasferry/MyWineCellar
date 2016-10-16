@@ -16,7 +16,7 @@
         </style>
         <app-pouchdb-document db-name="http://127.0.0.1:5984/cellar" doc-id="[[docId]]" data="{{bottle}}">
         </app-pouchdb-document>
-        <app-pouchdb-index db-name="cellar" fields='["name"]'>
+        <app-pouchdb-index db-name="http://127.0.0.1:5984/cellar" fields='["name"]'>
         </app-pouchdb-index>
 
         <form is="iron-form" id="submitBottle">

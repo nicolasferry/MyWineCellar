@@ -10,7 +10,13 @@
     </style>
 
     <template>
-        <news-element name="ne"></news-element>
+        <app-pouchdb-index db-name="http://127.0.0.1:5984/cellar" fields='["name, year"]'>
+        </app-pouchdb-index>
+        <app-pouchdb-query db-name="http://127.0.0.1:5984/cellar" selector="name $exists true" sort='["name"]' data="{{bottles}}">
+        </app-pouchdb-query>
+        <template is="dom-repeat" items="[[bottles]]" as="bottle">
+            <news-element name="ne" aoc="{{bottle.name}}" year="{{bottle.year}}" cru="{{bottle.cru}}"></news-element>
+        </template>
     </template>
 
     <script>

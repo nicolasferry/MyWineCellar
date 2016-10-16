@@ -26,11 +26,13 @@
     <link rel="import" href="../bower_components/google-map/google-map-directions.html">
     <link rel="import" href="../bower_components/google-chart/google-chart.html">
     <link rel="import" href="../bower_components/app-pouchdb/app-pouchdb-query.html">
+    <link rel="import" href="../bower_components/app-pouchdb/app-pouchdb-index.html">
     <link rel="import" href="../bower_components/app-pouchdb/app-pouchdb-document.html">
     <link rel="import" href="../bower_components/app-pouchdb/app-pouchdb-conflict-resolution.html">
 
     <link rel="import" href="add-dialog.html">
     <link rel="import" href="add-form.html">
+    <link rel="import" href="ocr-reader.html">
 
 
 </head>
@@ -134,7 +136,6 @@
             },
             _pageChanged: function (page) {
                 // Load page import on demand. Show 404 page if fails
-                console.log(">>>>" + page);
                 var resolvedPageUrl = this.resolveUrl(page + '.html');
                 this.importHref(resolvedPageUrl, null, this._showPage404, true);
             },

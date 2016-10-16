@@ -36,9 +36,9 @@
         <paper-card class="rate">
             <div class="rate-content">
                 <div class="card-content">
-                    <div class="rate-header">Rully</div>
-                    <div class="rate-name">Premier cru</div>
-                    <div>1999</div>
+                    <div class="rate-header">{{aoc}}</div>
+                    <div class="rate-name">{{cru}}</div>
+                    <div>{{year}}</div>
                 </div>
                 <div class="card-actions">
                     <paper-icon-button class="rate-icon" icon="star"></paper-icon-button>
@@ -55,7 +55,24 @@
 
     <script>
         Polymer({
-            is: 'news-element'
+            is: 'news-element',
+            properties: {
+                aoc: {
+                    type: String,
+                    reflectToAttribute: true,
+                    value: ''
+                },
+                year: {
+                    type: String,
+                    reflectToAttribute: true,
+                    value: ''
+                },
+                cru: {
+                    type: String,
+                    reflectToAttribute: true,
+                    value: ''
+                }
+            },
         });
     </script>
 </dom-module>
