@@ -16,6 +16,10 @@
             }
             ;
         }
+        
+        paper-tabs {
+            --paper-tabs-selection-bar-color: orange;
+        }
     </style>
 
     <template>
@@ -34,9 +38,9 @@
                         <iron-icon icon="image:add-a-photo"></iron-icon>
                     </paper-tab>
                 </paper-tabs>
-                <iron-pages selected="{{selected}}">
+                <iron-pages id="ironSelector" selected="{{selected}}">
                     <div>
-                        <add-form></add-form>
+                        <add-form id="manualAdd"></add-form>
                     </div>
                     <div>
                         <ocr-reader></ocr-reader>
@@ -48,7 +52,20 @@
 
     <script>
         Polymer({
-            is: 'add-dialog'
+            is: 'add-dialog',
+            ready: function () { // For child to send event
+                this.addEventListener('eventFromChild', this.myAction);
+            },
+            myAction: function (event) {
+                this.$.ironSelector.selected = 0;
+                var res = JSON.parse(event.detail);
+                console.log(res.year);
+                this.$.manualAdd.year = res.year;
+                this.$.manualAdd.region = res.region;
+                this.$.manualAdd.name = res.name;
+                this.$.manualAdd.country = res.country;
+                this.$.manualAdd.aoc = res.aoc;
+            }
         });
     </script>
 </dom-module>

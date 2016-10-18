@@ -16,14 +16,13 @@
         </style>
         <app-pouchdb-document db-name="http://127.0.0.1:5984/cellar" doc-id="[[docId]]" data="{{bottle}}">
         </app-pouchdb-document>
-        <app-pouchdb-index db-name="http://127.0.0.1:5984/cellar" fields='["name"]'>
-        </app-pouchdb-index>
+
 
         <form is="iron-form" id="submitBottle">
-            <paper-input on-focusout="setDocId" id="nameInput" bind-value="{{bottle.name}}" label="Name" required auto-validate error-message="Name required!"></paper-input>
-            <paper-input id="domainInput" bind-value="{{bottle.domain}}" label="Domain" auto-validate error-message="Domain required!"></paper-input>
-            <paper-input bind-value="{{bottle.region}}" label="Region" auto-validate></paper-input>
-            <paper-input id="yearInput" bind-value="{{bottle.year}}" label="Year" auto-validate pattern="[0-9]{0,4}" error-message="Number only!"></paper-input>
+            <paper-input on-focusout="setDocId" id="nameInput" bind-value="{{bottle.appelation}}" label="Appelation" value="{{aoc}}" required auto-validate error-message="Appelation required!"></paper-input>
+            <paper-input value="{{name}}" id="domainInput" bind-value="{{bottle.name}}" label="Name" auto-validate error-message="Name required!"></paper-input>
+            <paper-input value="{{region}}" bind-value="{{bottle.region}}" label="Region" auto-validate></paper-input>
+            <paper-input value="{{year}}" id="yearInput" bind-value="{{bottle.year}}" label="Year" auto-validate pattern="[0-9]{0,4}" error-message="Number only!"></paper-input>
             <paper-dropdown-menu bind-value="{{bottle.country}}" label="Country" name="country">
                 <paper-listbox class="dropdown-content" selected="0">
                     <paper-item>France</paper-item>
@@ -37,6 +36,7 @@
             </paper-dropdown-menu>
             <paper-dropdown-menu bind-value="{{bottle.cru}}" label="Cru" name="cru">
                 <paper-listbox class="dropdown-content">
+                    <paper-item>None</paper-item>
                     <paper-item>Permier cru</paper-item>
                     <paper-item>Grand cru</paper-item>
                     <paper-item>Cru classé</paper-item>
@@ -48,7 +48,7 @@
                 <paper-radio-button name="white">White</paper-radio-button>
                 <paper-radio-button name="rose">Rosé</paper-radio-button>
             </paper-radio-group>
-            <paper-input bind-value="{{bottle.quantity}}" label="Quantity" auto-validate pattern="[0-9]{0,4}" error-message="Number only!"></paper-input>
+            <paper-input bind-value="{{bottle.quantity}}" label="Quantity" auto-validate pattern="[0-9]{0,3}" error-message="Number only!"></paper-input>
             <paper-input bind-value="{{bottle.price}}" label="Price" auto-validate pattern="[0-9]{0,4}" error-message="Number only!">
                 <div prefix>€</div>
             </paper-input>
@@ -63,6 +63,34 @@
                 docId: {
                     type: String,
                     notify: true
+                },
+                aoc: {
+                    type: String,
+                    reflectToAttribute: true
+                },
+                name: {
+                    type: String,
+                    reflectToAttribute: true
+                },
+                region: {
+                    type: String,
+                    reflectToAttribute: true
+                },
+                country: {
+                    type: Number,
+                    reflectToAttribute: true
+                },
+                year: {
+                    type: Number,
+                    reflectToAttribute: true
+                },
+                price: {
+                    type: Number,
+                    reflectToAttribute: true
+                },
+                quantity: {
+                    type: Number,
+                    reflectToAttribute: true
                 }
             },
 

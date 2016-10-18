@@ -6,7 +6,8 @@
     <!-- Element Imports -->
     <link rel="import" href="../bower_components/paper-elements/paper-elements.html">
     <link rel="import" href="../bower_components/paper-item/paper-item-body.html">
-    <link rel="import" href="../bower_components/paper-item/paper-icon-item.html    ">
+    <link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
+    <link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
     <link rel="import" href="../bower_components/app-layout/app-layout.html">
     <link rel="import" href="../bower_components/font-roboto/roboto.html">
     <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
@@ -21,6 +22,7 @@
     <link rel="import" href="../bower_components/google-map/google-map.html">
     <link rel="import" href="../bower_components/iron-icons/social-icons.html">
     <link rel="import" href="../bower_components/iron-icons/image-icons.html">
+    <link rel="import" href="../bower_components/iron-icons/editor-icons.html">
     <link rel="import" href="../bower_components/google-map/google-map-marker.html">
     <link rel="import" href="../bower_components/google-map/google-map-poly.html">
     <link rel="import" href="../bower_components/google-map/google-map-directions.html">
@@ -29,6 +31,9 @@
     <link rel="import" href="../bower_components/app-pouchdb/app-pouchdb-index.html">
     <link rel="import" href="../bower_components/app-pouchdb/app-pouchdb-document.html">
     <link rel="import" href="../bower_components/app-pouchdb/app-pouchdb-conflict-resolution.html">
+    <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+    <link rel="import" href="../bower_components/file-upload/file-upload.html">
+    <link rel="import" href="../bower_components/file-upload/file-upload-icons.html">
 
     <link rel="import" href="add-dialog.html">
     <link rel="import" href="add-form.html">
@@ -66,6 +71,10 @@
                 position: fixed;
                 bottom: 16px;
                 right: 16px;
+            }
+            
+            paper-tabs {
+                --paper-tabs-selection-bar-color: orange;
             }
         </style>
 

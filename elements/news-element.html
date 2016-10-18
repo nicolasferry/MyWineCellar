@@ -24,6 +24,11 @@
             }
             
             .rate-name {
+                color: var(--paper-grey-800);
+                margin: 12px 0;
+            }
+            
+            .rate-cru {
                 color: var(--paper-grey-600);
                 margin: 10px 0;
             }
@@ -37,7 +42,8 @@
             <div class="rate-content">
                 <div class="card-content">
                     <div class="rate-header">{{aoc}}</div>
-                    <div class="rate-name">{{cru}}</div>
+                    <div class="rate-name">{{name}}</div>
+                    <div class="rate-cru">{{cru}}</div>
                     <div>{{year}}</div>
                 </div>
                 <div class="card-actions">
@@ -49,6 +55,8 @@
                 </div>
             </div>
             <div class="rate-image"></div>
+            <paper-icon-button icon='editor:mode-edit'>
+            </paper-icon-button>
         </paper-card>
     </template>
 
