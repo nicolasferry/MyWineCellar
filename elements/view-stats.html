@@ -24,11 +24,8 @@
             <google-map-marker latitude="37.777" longitude="-122.38911"></google-map-marker>
         </google-map>
         <div>
-            <google-chart type='pie' options='{"title": "Distribution of days in 2001Q1"}' cols='[{"label":"Month", "type":"string"}, {"label":"Days", "type":"number"}]' rows='[["Jan", 31],["Feb", 28],["Mar", 31]]' selection='[{"row": 1}]'>>
+            <google-chart type='pie' options='{"title": "Distribution of the wine per color"}' cols='[{"label":"Color", "type":"string"}, {"label":"Quantity", "type":"number"}]' rows='[["Red", 31],["White", 28],["Rosé", 31]]' selection='[{"row": 1}]'>>
             </google-chart>
-            <div id="selection-display">
-                Selected row: <span id="selection-label">None</span>.
-            </div>
         </div>
     </template>
 

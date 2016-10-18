@@ -55,8 +55,9 @@ function processOCR(image_path, options, res) {
 
             searchForAOC(output, result);
 
-            console.log(JSON.stringify(result));
-            result.name = "";
+            var regexName = /^.*(chateau|domaine).*$/mi;
+            var m = regexName.exec(output)
+            result.name = m[0];
 
             res.send(result);
         });
