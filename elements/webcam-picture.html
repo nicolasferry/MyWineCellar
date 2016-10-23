@@ -1,0 +1,130 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="webcam-picture">
+    <style>
+        .big {
+            --iron-icon-height: 60px;
+            --iron-icon-width: 60px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            padding: 180px 260px;
+            text-align: center;
+        }
+        
+        .big2 {
+            padding: 200px 300px;
+            text-align: center;
+        }
+    </style>
+    <template>
+        <iron-icon class="big" on-tap='startWebcam' hidden$="{{hideIcon}}" icon="image:add-a-photo"></iron-icon>
+        <video hidden$="{{hideVideo}}" id="webcam" on-tap='takePicture' width="640" height="480" tabindex="0" autoplay></video>
+        <canvas hidden$="{{hideCanvas}}" id="canvas" width="800" height="600"></canvas>
+        <paper-spinner class="big2" hidden$="{{hideSpinner}}" active></paper-spinner>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'webcam-picture',
+            properties: {
+                hideVideo: {
+                    type: Boolean,
+                    value: true
+                },
+                hideCanvas: {
+                    type: Boolean,
+                    value: true
+                },
+                hideSpinner: {
+                    type: Boolean,
+                    value: true
+                },
+                hideIcon: {
+                    type: Boolean,
+                    value: false
+                }
+            },
+            startWebcam: function () {
+                var that = this;
+                that.hideIcon = !that.hideIcon;
+                that.hideVideo = !that.hideVideo;
+
+                navigator.getMedia = (navigator.getUserMedia ||
+                    navigator.webkitGetUserMedia ||
+                    navigator.mozGetUserMedia ||
+                    navigator.msGetUserMedia);
+
+                navigator.getMedia({
+                        video: true,
+                        audio: false
+                    },
+                    function (stream) {
+                        if (navigator.mozGetUserMedia) {
+                            that.$.webcam.mozSrcObject = stream;
+                        } else {
+                            var vendorURL = window.URL || window.webkitURL;
+                            that.$.webcam.src = vendorURL.createObjectURL(stream);
+                        }
+                        that.$.webcam.play();
+                    },
+                    function (err) {
+                        console.log("An error occured! " + err);
+                    }
+                );
+                that.camStarted = true;
+            },
+
+            takePicture: function () {
+                var that = this;
+                var c = that.$.canvas,
+                    context = canvas.getContext("2d");
+                context.drawImage(that.$.webcam, 0, 0, 800, 600);
+                that.hideCanvas = !that.hideCanvas;
+                that.hideVideo = !that.hideVideo;
+                var dataUrl = c.toDataURL("image/jpeg", 1);
+                var formData = new FormData();
+                var blob = dataURItoBlob(dataUrl);
+                formData.append('file', blob);
+                that.hideCanvas = !that.hideCanvas;
+                that.hideSpinner = !that.hideSpinner;
+
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.open('POST', 'http://127.0.0.1:3000', true);
+                xhr.onload = function (e) {
+                    console.log('success');
+                };
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == XMLHttpRequest.DONE) {
+                        that.fire('eventFromChild', xhr.responseText);
+                    }
+                }
+                xhr.send(formData);
+            }
+        });
+
+        function dataURItoBlob(dataURI) {
+            // convert base64 to raw binary data held in a string
+            // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+            var byteString = atob(dataURI.split(',')[1]);
+
+            // separate out the mime component
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+            // write the bytes of the string to an ArrayBuffer
+            var ab = new ArrayBuffer(byteString.length);
+            var dw = new DataView(ab);
+            for (var i = 0; i < byteString.length; i++) {
+                dw.setUint8(i, byteString.charCodeAt(i));
+            }
+
+            // write the ArrayBuffer to a blob, and you're done
+            return new Blob([ab], {
+                type: mimeString
+            });
+        }
+    </script>
+</dom-module>
