@@ -3,6 +3,11 @@
 <dom-module id="news-element">
     <template>
         <style is="custom-style">
+            :host {
+                display: block;
+                padding: 10px 20px;
+            }
+            
             paper-card.rate {
                 @apply(--layout-horizontal);
             }
@@ -64,6 +69,7 @@
     <script>
         Polymer({
             is: 'news-element',
+
             properties: {
                 aoc: {
                     type: String,
@@ -76,6 +82,11 @@
                     value: ''
                 },
                 cru: {
+                    type: String,
+                    reflectToAttribute: true,
+                    value: ''
+                },
+                name: {
                     type: String,
                     reflectToAttribute: true,
                     value: ''

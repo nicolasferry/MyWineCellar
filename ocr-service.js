@@ -38,6 +38,7 @@ function processOCR(image_path, options, res) {
             }
             console.log('----------------------------------------------------');
             console.log(output);
+            console.log('----------------------------------------------------');
 
             //need to process the output .... hum in a better way!
             var result = {};
@@ -56,8 +57,10 @@ function processOCR(image_path, options, res) {
             searchForAOC(output, result);
 
             var regexName = /^.*(chateau|domaine).*$/mi;
-            var m = regexName.exec(output)
-            result.name = m[0];
+            var m = regexName.exec(output);
+            if (m != null) {
+                result.name = m[0];
+            }
 
             res.send(result);
         });

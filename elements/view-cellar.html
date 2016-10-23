@@ -18,27 +18,72 @@
                 width: 40px;
                 height: 40px;
                 border-radius: 50%;
-                background: var(--paper-amber-500);
+                background: var(--paper-amber-100);
             }
         </style>
-        <div role="listbox">
-            <paper-icon-item>
-                <div class="avatar" item-icon></div>
-                <paper-item-body two-line>
-                    <div>Photos</div>
-                    <div secondary>Jan 9, 2014</div>
-                </paper-item-body>
-                <paper-icon-button icon='delete' style='color: gray'>
-                </paper-icon-button>
-                <paper-icon-button icon='more-vert'>
-                </paper-icon-button>
-            </paper-icon-item>
+        <div>
+            <app-pouchdb-index db-name="http://127.0.0.1:5984/cellar" fields='["name, year, level"]'>
+            </app-pouchdb-index>
+            <app-pouchdb-query db-name="http://127.0.0.1:5984/cellar" selector="name $exists true" sort='["name"]' data="{{bottles}}">
+                <paper-input type="search" label="Filter by name" value="{{filterText::input}}">
+                    <iron-icon icon="search" suffix></iron-icon>
+                </paper-input>
+                <paper-input id="lev" type="number" label="Level" value="{{levelFilterText::input}}">
+                    <paper-icon-button suffix on-click="reset" icon="clear" alt="clear" title="clear">
+                    </paper-icon-button>
+                </paper-input>
+                <div role="listbox">
+                    <template id="bottleList" is="dom-repeat" items="{{bottles}}" as="bottle" filter="bottleFilter">
+                        <paper-icon-item>
+                            <div class="avatar" item-icon></div>
+                            <paper-item-body three-line>
+                                <div>{{bottle.name}}</div>
+                                <div secondary>{{bottle.appelation}}</div>
+                                <div secondary>{{bottle.year}}</div>
+                            </paper-item-body>
+                            <paper-icon-button icon='delete' style='color: gray'>
+                            </paper-icon-button>
+                            <paper-icon-button icon='more-vert'>
+                            </paper-icon-button>
+                        </paper-icon-item>
+                    </template>
+                </div>
         </div>
     </template>
 
     <script>
         Polymer({
-            is: 'view-cellar'
+            is: 'view-cellar',
+            properties: {
+                filterText: {
+                    type: String,
+                    notify: true,
+                    observer: "filterTextChanged"
+                },
+                levelFilterText: {
+                    type: String,
+                    notify: true,
+                    observer: "levelFilterTextChanged"
+                }
+            },
+            levelFilterTextChanged: function (newValue, oldValue) {
+                this.$.bottleList.render();
+            },
+            filterTextChanged: function (newValue, oldValue) {
+                this.$.bottleList.render();
+            },
+            bottleFilter: function (item) {
+                var x = true;
+                if (this.filterText != null)
+                    x = item.name.match(new RegExp(this.filterText, 'i'));
+                var y = true;
+                if (this.levelFilterText != null)
+                    y = item.level.match(new RegExp(this.levelFilterText, 'i'));
+                return x && y;
+            },
+            reset: function () {
+                this.levelFilterText = null;
+            }
         });
     </script>
 </dom-module>
