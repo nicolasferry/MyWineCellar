@@ -5,3 +5,6 @@ Needed:
 * CouchDB: store info about bottles with database called cellar
 * Nodejs: service for the ocr engine (i.e., tesseract)
 * Tesseract-ocr
+
+To be done:
+* config file for IPs, tesseract config
