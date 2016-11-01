@@ -43,6 +43,10 @@
                 --iron-icon-stroke-color: var(--paper-grey-600);
             }
         </style>
+
+        <app-pouchdb-document db-name="http://127.0.0.1:5984/cellar" doc-id="{{docId}}" data="{{star}}">
+        </app-pouchdb-document>
+
         <paper-card class="rate">
             <div class="rate-content">
                 <div class="card-content">
@@ -52,17 +56,17 @@
                     <div>{{year}}</div>
                 </div>
                 <div class="card-actions">
-                    <paper-icon-button class="rate-icon" icon="star"></paper-icon-button>
-                    <paper-icon-button class="rate-icon" icon="star"></paper-icon-button>
-                    <paper-icon-button class="rate-icon" icon="star"></paper-icon-button>
-                    <paper-icon-button class="rate-icon" icon="star"></paper-icon-button>
-                    <paper-icon-button class="rate-icon" icon="star"></paper-icon-button>
+                    <star-ratings value="{{star.stars}}" count="5"></star-ratings>
                 </div>
             </div>
-            <div class="rate-image"></div>
-            <paper-icon-button icon='editor:mode-edit'>
+            <paper-icon-button icon='editor:mode-edit' on-click="toggleDialog">
             </paper-icon-button>
         </paper-card>
+
+        <paper-dialog id="modal2" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+            <add-form id="add" doc-id="{{star._id}}" aoc="{{star.appelation}}" name="{{star.name}}" price="{{star.price}}" year="{{star.year}}" country="{{star.country}}" quantity="{{star.quantity}}" region="{{star.region}}"></add-form>
+        </paper-dialog>
+
     </template>
 
 
@@ -90,8 +94,15 @@
                     type: String,
                     reflectToAttribute: true,
                     value: ''
+                },
+                docId: {
+                    type: String,
+                    reflectToAttribute: true
                 }
             },
+            toggleDialog: function () {
+                this.$.modal2.open();
+            }
         });
     </script>
 </dom-module>

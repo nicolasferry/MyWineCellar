@@ -20,18 +20,108 @@
     </style>
 
     <template>
-        <google-map latitude="37.77493" longitude="-122.41942" fit-to-markers language="en" api-key="">
-            <google-map-marker latitude="37.777" longitude="-122.38911"></google-map-marker>
-        </google-map>
+
+        <app-pouchdb-query db-name="http://127.0.0.1:5984/cellar" selector="name $exists true" sort='["name"]' data="{{bottles}}" on-data-changed="stat">
+        </app-pouchdb-query>
+
         <div>
-            <google-chart type='pie' options='{"title": "Distribution of the wine per color"}' cols='[{"label":"Color", "type":"string"}, {"label":"Quantity", "type":"number"}]' rows='[["Red", 31],["White", 28],["Rosé", 31]]' selection='[{"row": 1}]'>>
+            <google-chart id='colorpie' type='pie' options='{"title": "Distribution of the wine per color"}' cols='[{"label":"Color", "type":"string"}, {"label":"Quantity", "type":"number"}]' selection='[{"row": 1}]' rows='[ ["Red", 0],["Rosé", 0],["White", 0] ]'>
             </google-chart>
+
+            <google-chart id='regionpie' type='pie' options='{"title": "Distribution of the wine per region"}' cols='[{"label":"Region", "type":"string"}, {"label":"Quantity", "type":"number"}]' selection='[{"row": 1}]' rows='[ ["Red", 1],["Rosé", 1],["White", 0] ]'>
+            </google-chart>
+
+            <google-chart id="geo" type="geo">
+            </google-chart>
+
         </div>
     </template>
 
     <script>
         Polymer({
-            is: 'view-stats'
+            is: 'view-stats',
+
+            stat: function (event) {
+                this.statColor(event);
+                this.statRegion(event);
+                this.statCountry(event);
+            },
+
+            statColor: function (event) {
+                var bottles = event.detail.value;
+                var row = [];
+                var red = ["Red"];
+                var nbRed = 0;
+                var rose = ["Rosé"];
+                var nbRose = 0;
+                var white = ["White"];
+                var nbWhite = 0;
+                bottles.forEach(function (bottle) {
+                    if (bottle.color.indexOf("Red") >= 0) {
+                        nbRed++;
+                    } else if (bottle.color.indexOf("Rosé") >= 0) {
+                        nbRose++;
+                    } else if (bottle.color.indexOf("White") >= 0) {
+                        nbWhite++;
+                    }
+                });
+                red.push(nbRed);
+                rose.push(nbRose);
+                white.push(nbWhite);
+                row.push(red);
+                row.push(rose);
+                row.push(white);
+                var chart = document.getElementById('colorpie');
+                chart.rows = row;
+            },
+            statRegion: function (event) {
+                var bottles = event.detail.value;
+                var row = [];
+                bottles.forEach(function (bottle) {
+                    var j = -1;
+                    for (var i = 0; i < row.length; i++) {
+                        if (row[i].indexOf(bottle.region) >= 0) {
+                            j = i;
+                            break;
+                        }
+                    }
+                    if (j >= 0) {
+                        row[j][1] += (1 * bottle.quantity);
+                    } else {
+                        var tab = [];
+                        tab.push(bottle.region);
+                        tab.push(1);
+                        row.push(tab);
+                    }
+                });
+                var chart = document.getElementById('regionpie');
+                chart.rows = row;
+            },
+            statCountry: function (event) {
+                var bottles = event.detail.value;
+                var bottles = event.detail.value;
+                var row = [["Country", "Popularity"]];
+                bottles.forEach(function (bottle) {
+                    var j = -1;
+                    for (var i = 0; i < row.length; i++) {
+                        if (row[i].indexOf(bottle.country) >= 0) {
+                            j = i;
+                            break;
+                        }
+                    }
+                    if (j >= 0) {
+                        row[j][1] += (10 * bottle.quantity);
+                    } else {
+                        var tab = [];
+                        tab.push(bottle.country);
+                        tab.push(10);
+                        row.push(tab);
+                    }
+                });
+                console.log(row);
+                var chart = document.getElementById('geo');
+                chart.data = row;
+            }
         });
     </script>
 </dom-module>

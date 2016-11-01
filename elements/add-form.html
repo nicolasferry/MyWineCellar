@@ -4,6 +4,11 @@
 <dom-module id="add-form">
     <template>
         <style>
+            :host {
+                display: block;
+                padding: 10px 20px;
+            }
+            
             paper-button.indigo {
                 background-color: var(--paper-indigo-500);
                 color: white;
@@ -22,7 +27,7 @@
             <paper-input on-focusout="setDocId" id="nameInput" bind-value="{{bottle.appelation}}" label="Appelation" value="{{aoc}}" required auto-validate error-message="Appelation required!"></paper-input>
             <paper-input value="{{name}}" id="domainInput" bind-value="{{bottle.name}}" label="Name" auto-validate error-message="Name required!"></paper-input>
             <paper-input value="{{region}}" bind-value="{{bottle.region}}" label="Region" auto-validate></paper-input>
-            <paper-input value="{{year}}" id="yearInput" bind-value="{{bottle.year}}" label="Year" auto-validate pattern="[0-9]{0,4}" error-message="Number only!"></paper-input>
+            <paper-input type="number" value="{{year}}" id="yearInput" bind-value="{{bottle.year}}" label="Year" auto-validate pattern="[0-9]{0,4}" error-message="Number only!"></paper-input>
             <paper-dropdown-menu bind-value="{{bottle.country}}" label="Country" name="country">
                 <paper-listbox class="dropdown-content" selected="0">
                     <paper-item>France</paper-item>
@@ -43,13 +48,13 @@
                 </paper-listbox>
             </paper-dropdown-menu>
             <label id="color">Color:</label>
-            <paper-radio-group bind-value="{{bottle.color}}" aria-labelledby="color1">
+            <paper-radio-group bind-value="{{bottle.color}}" aria-labelledby="color1" required>
                 <paper-radio-button name="red">Red</paper-radio-button>
                 <paper-radio-button name="white">White</paper-radio-button>
                 <paper-radio-button name="rose">Rosé</paper-radio-button>
             </paper-radio-group>
-            <paper-input bind-value="{{bottle.quantity}}" label="Quantity" auto-validate pattern="[0-9]{0,3}" error-message="Number only!"></paper-input>
-            <paper-input bind-value="{{bottle.price}}" label="Price" auto-validate pattern="[0-9]{0,4}" error-message="Number only!">
+            <paper-input type="number" bind-value="{{bottle.quantity}}" label="Quantity" auto-validate pattern="[0-9]{0,3}" error-message="Number only!"></paper-input>
+            <paper-input type="number" bind-value="{{bottle.price}}" label="Price" auto-validate pattern="[0-9]{0,4}" error-message="Number only!">
                 <div prefix>€</div>
             </paper-input>
             <paper-button raised on-click="submitForm" class="custom indigo">Submit</paper-button>

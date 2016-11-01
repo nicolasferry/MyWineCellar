@@ -23,33 +23,32 @@
     </style>
 
     <template>
-        <app-pouchdb-confict-resolution strategy="firstWriteWins"></app-pouchdb-conflict-resolution>
-            <paper-dialog id="modal">
-                <h2>Add a bottle</h2>
-                <paper-tabs selected="{{selected}}">
-                    <paper-tab>Manual
-                        <iron-icon icon="social:person"></iron-icon>
-                    </paper-tab>
-                    <paper-tab>File
-                        <iron-icon icon="file-upload"></iron-icon>
-                    </paper-tab>
-                    <paper-tab>
-                        Take a picture
-                        <iron-icon icon="image:add-a-photo"></iron-icon>
-                    </paper-tab>
-                </paper-tabs>
-                <iron-pages id="ironSelector" selected="{{selected}}">
-                    <div>
-                        <add-form id="manualAdd"></add-form>
-                    </div>
-                    <div>
-                        <ocr-reader></ocr-reader>
-                    </div>
-                    <div>
-                        <webcam-picture></webcam-picture>
-                    </div>
-                </iron-pages>
-            </paper-dialog>
+        <paper-dialog id="modal" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+            <h2>Add a bottle</h2>
+            <paper-tabs selected="{{selected}}">
+                <paper-tab>Manual
+                    <iron-icon icon="social:person"></iron-icon>
+                </paper-tab>
+                <paper-tab>File
+                    <iron-icon icon="file-upload"></iron-icon>
+                </paper-tab>
+                <paper-tab>
+                    Take a picture
+                    <iron-icon icon="image:add-a-photo"></iron-icon>
+                </paper-tab>
+            </paper-tabs>
+            <iron-pages id="ironSelector" selected="{{selected}}">
+                <div>
+                    <add-form id="manualAdd"></add-form>
+                </div>
+                <div>
+                    <ocr-reader></ocr-reader>
+                </div>
+                <div>
+                    <webcam-picture></webcam-picture>
+                </div>
+            </iron-pages>
+        </paper-dialog>
     </template>
 
     <script>

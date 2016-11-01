@@ -22,32 +22,31 @@
             }
         </style>
         <div>
-            <app-pouchdb-index db-name="http://127.0.0.1:5984/cellar" fields='["name, year, level"]'>
-            </app-pouchdb-index>
             <app-pouchdb-query db-name="http://127.0.0.1:5984/cellar" selector="name $exists true" sort='["name"]' data="{{bottles}}">
-                <paper-input type="search" label="Filter by name" value="{{filterText::input}}">
-                    <iron-icon icon="search" suffix></iron-icon>
-                </paper-input>
-                <paper-input id="lev" type="number" label="Level" value="{{levelFilterText::input}}">
-                    <paper-icon-button suffix on-click="reset" icon="clear" alt="clear" title="clear">
-                    </paper-icon-button>
-                </paper-input>
-                <div role="listbox">
-                    <template id="bottleList" is="dom-repeat" items="{{bottles}}" as="bottle" filter="bottleFilter">
-                        <paper-icon-item>
-                            <div class="avatar" item-icon></div>
-                            <paper-item-body three-line>
-                                <div>{{bottle.name}}</div>
-                                <div secondary>{{bottle.appelation}}</div>
-                                <div secondary>{{bottle.year}}</div>
-                            </paper-item-body>
-                            <paper-icon-button icon='delete' style='color: gray'>
-                            </paper-icon-button>
-                            <paper-icon-button icon='more-vert'>
-                            </paper-icon-button>
-                        </paper-icon-item>
-                    </template>
-                </div>
+            </app-pouchdb-query>
+            <paper-input type="search" label="Filter by name" value="{{filterText::input}}">
+                <iron-icon icon="search" suffix></iron-icon>
+            </paper-input>
+            <paper-input id="level" type="number" label="Level" value="{{levelFilterText::input}}">
+                <paper-icon-button suffix on-click="reset" icon="clear" alt="clear" title="clear">
+                </paper-icon-button>
+            </paper-input>
+            <div role="listbox">
+                <template id="bottleList" is="dom-repeat" items="{{bottles}}" as="bottle" filter="bottleFilter">
+                    <paper-icon-item>
+                        <div class="avatar" item-icon></div>
+                        <paper-item-body three-line>
+                            <div>{{bottle.name}}</div>
+                            <div secondary>{{bottle.appelation}}</div>
+                            <div secondary>{{bottle.year}}</div>
+                        </paper-item-body>
+                        <paper-icon-button icon='delete' style='color: gray'>
+                        </paper-icon-button>
+                        <paper-icon-button icon='more-vert'>
+                        </paper-icon-button>
+                    </paper-icon-item>
+                </template>
+            </div>
         </div>
     </template>
 

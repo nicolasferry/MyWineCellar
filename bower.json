@@ -43,6 +43,9 @@
     "paper-tabs": "polymerelements/paper-tabs#^1.6.3",
     "paper-card": "polymerelements/paper-card#^1.1.4",
     "paper-scroll-header-panel": "polymerelements/paper-scroll-header-panel#^1.0.16",
-    "iron-form": "polymerelements/iron-form#^1.1.4"
+    "iron-form": "polymerelements/iron-form#^1.1.4",
+    "neon-animation": "polymerelements/neon-animation#^1.2.4",
+    "paper-dialog-scrollable": "polymerelements/paper-dialog-scrollable#^1.1.5",
+    "star-ratings": "polymerlabs/star-ratings"
   }
 }

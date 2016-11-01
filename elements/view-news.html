@@ -14,8 +14,9 @@
         </app-pouchdb-index>
         <app-pouchdb-query db-name="http://127.0.0.1:5984/cellar" selector="name $exists true" sort='["name"]' data="{{bottles}}">
         </app-pouchdb-query>
+
         <template is="dom-repeat" items="[[bottles]]" as="bottle">
-            <news-element name="{{bottle.name}}" aoc="{{bottle.appelation}}" year="{{bottle.year}}" cru="{{bottle.cru}}"></news-element>
+            <news-element doc-id="{{bottle._id}}" name="{{bottle.name}}" aoc="{{bottle.appelation}}" year="{{bottle.year}}" cru="{{bottle.cru}}"></news-element>
         </template>
     </template>
 
